@@ -1,19 +1,29 @@
+// routes/userRoutes.js
 import express from 'express';
-import { protect, authorize } from '../middleware/authMiddleware.js'; // Adjust path as needed
-// Import user controllers when created, e.g., { getAllUsers, createUser, getUserById, updateUser, deleteUser } from '../controllers/userController.js';
+import { protect, authorize } from '../middleware/authMiddleware.js'; // Adjust path
+// Import the implemented controller functions
+import {
+    getAllUsers,
+    getUserById,
+    createUser,
+    updateUser,
+    deleteUser
+} from '../controllers/userController.js'; // Adjust path
 
 const router = express.Router();
 
-// Example: Protect all routes in this file and authorize only Admins
+// Protect all user routes and authorize only Admins
 router.use(protect);
-router.use(authorize('Admin')); // Only Admins can access these routes
+router.use(authorize('Admin'));
 
-// Define routes (link to controller functions when implemented)
-// router.route('/').get(getAllUsers).post(createUser);
-// router.route('/:id').get(getUserById).put(updateUser).delete(deleteUser);
+// Define routes using the controller functions
+router.route('/')
+    .get(getAllUsers)
+    .post(createUser);
 
-// Placeholder response until controllers are built
-router.get('/', (req, res) => res.json({ message: 'Admin User Management Route (Protected)' }));
-
+router.route('/:id')
+    .get(getUserById)
+    .put(updateUser)
+    .delete(deleteUser);
 
 export default router;
